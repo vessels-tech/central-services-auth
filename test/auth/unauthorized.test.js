@@ -12,7 +12,7 @@ Test('UnauthorizedError test', errorTest => {
       test.equal(error.category, ErrorCategory.UNAUTHORIZED)
       test.equal(error.message, 'Unauthorized')
       test.equal(error.scheme, 'Basic')
-      test.equal(error.payload.error_id, 'UnauthorizedError')
+      test.equal(error.payload.id, 'UnauthorizedError')
       test.equal(error.payload.message, 'Unauthorized')
       test.equal(error.headers['WWW-Authenticate'], 'Basic error="Unauthorized"')
       test.end()
