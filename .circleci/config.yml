@@ -12,7 +12,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: update-npm
+          name: Update NPM install
           command: 'sudo npm install'
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
@@ -24,8 +24,12 @@ jobs:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
-      - run: mkdir -p ./test/results
-      - run: npm -s run test:xunit > ./test/results/tape.xml
+      - run: 
+          name: Create dir for test results
+          command: mkdir -p ./test/results
+      - run: 
+          name: Execute unit tests
+          command: npm -s run test:xunit > ./test/results/tape.xml
       - store_artifacts:
           path: ./test/results
           prefix: test
@@ -37,27 +41,26 @@ jobs:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
-      - run: mkdir -p ./test/results
-      - run: npm -s run test:coverage-check
+      - run: 
+          name: Execute code coverage check
+          command: npm -s run test:coverage-check
       - store_artifacts:
           path: coverage
           prefix: test
       - store_test_results:
           path: coverage
   deploy:
-    docker:
-      - image: circleci/node:6.10.3
+    <<: *defaults
     steps:
       - checkout
-      # restore npm module dependencies from cache
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
-      # setup npm
-      - run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
-      # publish npm
-      - deploy:
-        name: publish-npm
-        command: npm publish --access public
+      - run:
+          name: Update NPM registry auth token
+          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+      - run: 
+          name: Publish NPM artifact
+          command: npm publish --access public
 
 workflows:
   version: 2
@@ -90,10 +93,10 @@ workflows:
             - setup
             - test-unit
             - test-coverage
-        # filters:
-        #     tags:
-        #       only: /v[0-9]+(\.[0-9]+)*/
-        #     branches:
-        #       only: 
-        #         - master
-        #         - develop
+          filters:
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+            branches:
+              only: 
+                - master
+                - develop
