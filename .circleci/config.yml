@@ -1,5 +1,19 @@
 version: 2
 jobs:
+  build:
+    docker:
+      - image: circleci/node:$NODE_VERSION
+    steps:
+      - checkout
+      # restore npm module dependencies from cache
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      # setup npm
+      - run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+      # publish npm
+      - deploy:
+        name: publish-npm
+        command: npm publish --access public
   setup:
     docker:
       - image: circleci/node:$NODE_VERSION
@@ -38,20 +52,6 @@ jobs:
           prefix: test
       - store_test_results:
           path: coverage
-  build:
-    docker:
-      - image: circleci/node:$NODE_VERSION
-    steps:
-      - checkout
-      # restore npm module dependencies from cache
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      # setup npm
-      - run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
-      # publish npm
-      - deploy:
-        name: publish-npm
-        command: npm publish --access public
 
 workflows:
   version: 2
