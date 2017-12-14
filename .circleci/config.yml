@@ -55,8 +55,9 @@ jobs:
     steps:
       - attach_workspace:
           at: /home/circleci
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+      # - restore_cache:
+      #     key: dependency-cache-{{ checksum "package.json" }}
+      - run: ls -l
       - run: npm -s run test:coverage-check
       - store_artifacts:
           path: coverage
