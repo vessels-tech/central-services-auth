@@ -51,8 +51,8 @@ jobs:
           path: coverage
   deploy:
     <<: *defaults
-    environment:
-      - NPM_TOKEN: "TEST"
+    # environment:
+    #   - NPM_TOKEN: "TEST"
     steps:
       - checkout
       - restore_cache:
