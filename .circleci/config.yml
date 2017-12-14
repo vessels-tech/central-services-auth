@@ -48,7 +48,7 @@ jobs:
           path: coverage
           prefix: test
       - store_test_results:
-          path: coverage/lcov-report/index.html
+          path: coverage/coverage.json
   deploy:
     <<: *defaults
     steps:
