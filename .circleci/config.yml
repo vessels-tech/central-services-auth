@@ -62,25 +62,27 @@ workflows:
         filters:
             branches:
               ignore: /feature*/
-      - test-unit:
-        requires:
-          - setup
-        filters:
-          branches:
-            ignore: /feature*/    
-      - test-coverage:
-        requires:
-          - setup
-        filters:
-          branches:
-            ignore: /feature*/
-      - build:
-        requires:
-          - setup
-          - test-unit
-          - test-coverage
-        filters:
-            tags:
-              only: /v[0-9]+(\.[0-9]+)*/
-            branches:
-              only: /feature*/
+      # - test-unit:
+      #   requires:
+      #     - setup
+      #   filters:
+      #     branches:
+      #       ignore: /feature*/    
+      # - test-coverage:
+      #   requires:
+      #     - setup
+      #   filters:
+      #     branches:
+      #       ignore: /feature*/
+      # - build:
+      #   requires:
+      #     - setup
+      #     - test-unit
+      #     - test-coverage
+      #   filters:
+      #       tags:
+      #         only: /v[0-9]+(\.[0-9]+)*/
+      #       branches:
+      #         only: 
+      #           - master
+      #           - develop
