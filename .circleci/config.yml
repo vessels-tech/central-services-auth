@@ -45,10 +45,10 @@ jobs:
           name: Execute code coverage check
           command: npm -s run test:coverage-check
       - store_artifacts:
-          path: coverage
+          path: coverage/lcov-report
           prefix: test
       - store_test_results:
-          path: coverage
+          path: coverage/lcov-report
   deploy:
     <<: *defaults
     # environment:
@@ -99,5 +99,5 @@ workflows:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
             branches:
-              only: 
+              only:
                 - master
