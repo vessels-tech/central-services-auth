@@ -51,12 +51,25 @@ jobs:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
+      - run: mkdir -p ./test/results
       - run: npm -s run test:coverage-check
       - store_artifacts:
           path: coverage
           prefix: test
       - store_test_results:
           path: coverage
+  # test-coverage:
+  #   <<: *defaults
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         key: dependency-cache-{{ checksum "package.json" }}
+  #     - run: npm -s run test:coverage-check
+  #     - store_artifacts:
+  #         path: coverage
+  #         prefix: test
+  #     - store_test_results:
+  #         path: coverage
 
 workflows:
   version: 2
