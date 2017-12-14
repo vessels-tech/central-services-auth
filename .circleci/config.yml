@@ -86,10 +86,10 @@ workflows:
                 - /feature*/
                 - /bugfix*/
       - deploy:
-        requires:
-          - setup
-          - test-unit
-          - test-coverage
+          requires:
+            - setup
+            - test-unit
+            - test-coverage
         # filters:
         #     tags:
         #       only: /v[0-9]+(\.[0-9]+)*/
