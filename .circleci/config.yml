@@ -7,20 +7,6 @@ defaults: &defaults
     - image: circleci/node:6.10.3
 
 jobs:
-  build:
-    docker:
-      - image: circleci/node:6.10.3
-    steps:
-      - checkout
-      # restore npm module dependencies from cache
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      # setup npm
-      - run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
-      # publish npm
-      - deploy:
-        name: publish-npm
-        command: npm publish --access public
   setup:
     <<: *defaults
     steps:
@@ -41,10 +27,10 @@ jobs:
       - run: mkdir -p ./test/results
       - run: npm -s run test:xunit > ./test/results/tape.xml
       - store_artifacts:
-          path: ./test/results/
+          path: ./test/results
           prefix: test
       - store_test_results:
-          path: ./test/results/
+          path: ./test/results
   test-coverage:
     <<: *defaults
     steps:
@@ -58,18 +44,20 @@ jobs:
           prefix: test
       - store_test_results:
           path: coverage
-  # test-coverage:
-  #   <<: *defaults
-  #   steps:
-  #     - checkout
-  #     - restore_cache:
-  #         key: dependency-cache-{{ checksum "package.json" }}
-  #     - run: npm -s run test:coverage-check
-  #     - store_artifacts:
-  #         path: coverage
-  #         prefix: test
-  #     - store_test_results:
-  #         path: coverage
+  deploy:
+    docker:
+      - image: circleci/node:6.10.3
+    steps:
+      - checkout
+      # restore npm module dependencies from cache
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      # setup npm
+      - run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+      # publish npm
+      - deploy:
+        name: publish-npm
+        command: npm publish --access public
 
 workflows:
   version: 2
@@ -97,15 +85,15 @@ workflows:
               ignore: 
                 - /feature*/
                 - /bugfix*/
-      # - build:
-      #   requires:
-      #     - setup
-      #     - test-unit
-      #     - test-coverage
-      #   filters:
-      #       tags:
-      #         only: /v[0-9]+(\.[0-9]+)*/
-      #       branches:
-      #         only: 
-      #           - master
-      #           - develop
+      - deploy:
+        requires:
+          - setup
+          - test-unit
+          - test-coverage
+        # filters:
+        #     tags:
+        #       only: /v[0-9]+(\.[0-9]+)*/
+        #     branches:
+        #       only: 
+        #         - master
+        #         - develop
