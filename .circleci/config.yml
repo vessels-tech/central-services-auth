@@ -45,14 +45,12 @@ jobs:
           name: Execute code coverage check
           command: npm -s run test:coverage-check
       - store_artifacts:
-          path: coverage/lcov-report
+          path: coverage
           prefix: test
       - store_test_results:
-          path: coverage/lcov-report
+          path: coverage/lcov-report/index.html
   deploy:
     <<: *defaults
-    # environment:
-    #   - NPM_TOKEN: "TEST"
     steps:
       - checkout
       - restore_cache:
