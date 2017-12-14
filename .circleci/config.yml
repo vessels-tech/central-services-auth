@@ -41,17 +41,16 @@ jobs:
       - run: mkdir -p ./test/results
       - run: npm -s run test:xunit > ./test/results/tape.xml
       - store_artifacts:
-          path: ./test/results/tape.xml
+          path: ./test/results/
           prefix: test
       - store_test_results:
-          path: ./test/results/tape.xml
+          path: ./test/results/
   test-coverage:
     <<: *defaults
     steps:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
-      - run: ls -l
       - run: npm -s run test:coverage-check
       - store_artifacts:
           path: coverage
@@ -77,13 +76,13 @@ workflows:
               ignore: 
                 - /feature*/
                 - /bugfix*/             
-      # - test-coverage:
-      #     requires:
-      #       - setup
-      #     filters:
-      #       branches:
-      #           - /feature*/
-      #           - /bugfix*/
+      - test-coverage:
+          requires:
+            - setup
+          filters:
+            branches:
+                - /feature*/
+                - /bugfix*/
       # - build:
       #   requires:
       #     - setup
