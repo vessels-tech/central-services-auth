@@ -57,7 +57,7 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: Update NPM registry auth token
-          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+          command: echo "//registry.npmjs.org/:_authToken={{ .Environment.NPM_TOKEN }}" > .npmrc
       - run: 
           name: Publish NPM artifact
           command: npm publish --access public
