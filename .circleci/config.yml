@@ -3,7 +3,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:${NODE_VERSION}
+      - image: circleci/node:6.10.3
     steps:
       - checkout
       # restore npm module dependencies from cache
@@ -17,7 +17,7 @@ jobs:
         command: npm publish --access public
   setup:
     docker:
-      - image: circleci/node:${NODE_VERSION}
+      - image: circleci/node:6.10.3
     steps:
       - run:
           name: update-npm
@@ -28,7 +28,7 @@ jobs:
             - node_modules
   test-unit:
     docker:
-      - image: circleci/node:${NODE_VERSION}
+      - image: circleci/node:6.10.3
     steps:
       - checkout
       - restore_cache:
@@ -42,7 +42,7 @@ jobs:
           path: ./test/results/tape.xml
   test-coverage:
     docker:
-      - image: circleci/node:${NODE_VERSION}
+      - image: circleci/node:6.10.3
     steps:
       - checkout
       - restore_cache:
