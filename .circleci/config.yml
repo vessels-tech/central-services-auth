@@ -23,9 +23,9 @@ jobs:
           name: update-npm
           command: 'sudo npm install -g npm@latest'
       - save_cache:
-        key: dependency-cache-{{ checksum "package.json" }}
-        paths:
-          - node_modules
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
   test-unit:
     docker:
       - image: circleci/node:$NODE_VERSION
