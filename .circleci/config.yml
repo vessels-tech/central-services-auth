@@ -65,9 +65,9 @@ workflows:
   build_and_test:
     jobs:
       - setup:
-        filters:
-            branches:
-              ignore: /feature*/
+          filters:
+              branches:
+                ignore: /feature*/
       # - test-unit:
       #   requires:
       #     - setup
