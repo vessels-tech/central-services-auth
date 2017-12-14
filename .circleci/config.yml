@@ -32,6 +32,9 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
+      - persist_to_workspace:
+          paths:
+            - /home/circleci
   test-unit:
     <<: *defaults
     steps:
