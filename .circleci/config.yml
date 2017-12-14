@@ -40,7 +40,7 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: /home/circleci
+          at: .
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run: mkdir -p ./test/results
