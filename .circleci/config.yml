@@ -32,15 +32,10 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
-      - persist_to_workspace:
-          root: /
-          paths:
-            - ./home/circleci
   test-unit:
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: .
+      - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run: mkdir -p ./test/results
@@ -53,10 +48,9 @@ jobs:
   test-coverage:
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: /home/circleci
-      # - restore_cache:
-      #     key: dependency-cache-{{ checksum "package.json" }}
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
       - run: ls -l
       - run: npm -s run test:coverage-check
       - store_artifacts:
