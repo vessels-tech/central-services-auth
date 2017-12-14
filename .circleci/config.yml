@@ -1,0 +1,91 @@
+version: 2
+jobs:
+  setup:
+    docker:
+      - image: circleci/node:$NODE_VERSION
+    steps:
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
+      - save_cache:
+        key: dependency-cache-{{ checksum "package.json" }}
+        paths:
+          - ./node_modules
+  test-unit:
+    docker:
+      - image: circleci/node:$NODE_VERSION
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run: mkdir -p ./test/results
+      - run: npm -s run test:xunit > ./test/results/tape.xml
+      - store_artifacts:
+          path: ./test/results/tape.xml
+          prefix: test
+      - store_test_results:
+          path: ./test/results/tape.xml
+  test-coverage:
+    docker:
+      - image: circleci/node:$NODE_VERSION
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run: npm -s run test:coverage-check
+      - store_artifacts:
+          path: coverage
+          prefix: test
+      - store_test_results:
+          path: coverage
+  deploy:
+    docker:
+      - image: circleci/node:$NODE_VERSION
+    steps:
+      - checkout
+      # restore npm module dependencies from cache
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      # setup npm
+      - run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+      # publish npm
+      - deploy:
+        name: publish-npm
+        command: npm publish --access public
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - setup:
+        filters:
+            branches:
+              ignore:
+                - /bugfix*/
+                # - /feature*/
+      - test-unit:
+        requires:
+          - setup
+        filters:
+          branches:
+            ignore:
+              - /bugfix*/
+              # - /feature*/          
+      - test-coverage:
+        requires:
+          - setup
+        filters:
+          branches:
+            ignore:
+              - /bugfix*/
+              # - /feature*/
+      - deploy
+        requires:
+          - setup
+          - test-unit
+          - test-coverage
+        filters:
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+            branches:
+              only: /feature*/
