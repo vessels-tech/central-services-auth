@@ -52,7 +52,7 @@ jobs:
   deploy:
     <<: *defaults
     environment:
-      - NPM_TOKEN: $NPM_TOKEN
+      - NPM_TOKEN: "TEST"
     steps:
       - checkout
       - restore_cache:
