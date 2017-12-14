@@ -52,7 +52,7 @@ jobs:
   deploy:
     <<: *defaults
     environment:
-      - NPM_TOKEN: {{ .Environment.NPM_TOKEN }}
+      - NPM_TOKEN: $NPM_TOKEN
     steps:
       - checkout
       - restore_cache:
