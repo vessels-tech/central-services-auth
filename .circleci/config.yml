@@ -1,4 +1,4 @@
-# CircleCI Config 2017 ds
+# CircleCI Config 2017
 version: 2
 jobs:
   build:
