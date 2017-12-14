@@ -62,7 +62,7 @@ workflows:
             branches:
               ignore:
                 - /bugfix*/
-                - /feature*/
+                # - /feature*/
       - test-unit:
         requires:
           - setup
@@ -70,7 +70,7 @@ workflows:
           branches:
             ignore:
               - /bugfix*/
-              - /feature*/          
+              # - /feature*/      
       - test-coverage:
         requires:
           - setup
@@ -78,7 +78,7 @@ workflows:
           branches:
             ignore:
               - /bugfix*/
-              - /feature*/
+              # - /feature*/
       - build:
         requires:
           - setup
