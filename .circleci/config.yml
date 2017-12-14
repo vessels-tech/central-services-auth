@@ -70,21 +70,21 @@ workflows:
                 ignore: 
                   - /feature*/
                   - /bugfix*/
-      - test-unit:
-          requires:
-            - setup
-          filters:
-            branches:
-              ignore: 
-                - /feature*/
-                - /bugfix*/             
-      - test-coverage:
-          requires:
-            - setup
-          filters:
-            branches:
-                - /feature*/
-                - /bugfix*/
+      # - test-unit:
+      #     requires:
+      #       - setup
+      #     filters:
+      #       branches:
+      #         ignore: 
+      #           - /feature*/
+      #           - /bugfix*/             
+      # - test-coverage:
+      #     requires:
+      #       - setup
+      #     filters:
+      #       branches:
+      #           - /feature*/
+      #           - /bugfix*/
       # - build:
       #   requires:
       #     - setup
