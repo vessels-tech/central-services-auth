@@ -1,4 +1,4 @@
-# CircleCI Config 2017 test
+# CircleCI v2 Config
 version: 2
 
 defaults: &defaults
@@ -51,8 +51,8 @@ jobs:
           path: coverage
   deploy:
     <<: *defaults
-    environment:
-      - NPM_TOKEN: {{ .Environment.NPM_TOKEN }}
+    # environment:
+    #   - NPM_TOKEN: {{ .Environment.NPM_TOKEN }}
     steps:
       - checkout
       - restore_cache:
