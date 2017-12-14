@@ -93,7 +93,8 @@ workflows:
           requires:
             - setup
           filters:
-              branches:
+            branches:
+              ignore: 
                 - /feature*/
                 - /bugfix*/
       # - build:
