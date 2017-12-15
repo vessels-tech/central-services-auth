@@ -48,7 +48,7 @@ jobs:
           path: coverage
           prefix: test
       - store_test_results:
-          path: coverage/coverage.json
+          path: coverage
   deploy:
     <<: *defaults
     steps:
