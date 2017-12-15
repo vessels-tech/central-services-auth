@@ -92,7 +92,9 @@ workflows:
                 - /feature*/
                 - /bugfix*/
       - deploy:
-          context: org-global
+          context: 
+            - org-global
+            - org-global-npm
           requires:
             - setup
             - test-unit
