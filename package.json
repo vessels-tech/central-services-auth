@@ -1,6 +1,6 @@
 {
   "name": "@mojaloop/central-services-auth",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "Authentication module for central services",
   "main": "src/index.js",
   "scripts": {
@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/mojaloop/central-services-auth#readme",
   "dependencies": {
-    "@mojaloop/central-services-shared": "^0.2.0"
+    "@mojaloop/central-services-shared": "^0.3.0"
   },
   "devDependencies": {
     "faucet": "0.0.1",
@@ -40,6 +40,6 @@
     "tape": "^4.6.2"
   },
   "publishConfig": {
-    "registry": "https://modusbox.jfrog.io/modusbox/api/npm/level1-npm-release"
+    "registry": "https://registry.npmjs.org/"
   }
 }

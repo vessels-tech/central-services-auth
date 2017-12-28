@@ -4,6 +4,7 @@ const Test = require('tape')
 const Sinon = require('sinon')
 const AuthModule = require('../src/index')
 const BasicAuth = require('../src/auth/basic')
+const BearerAuth = require('../src/auth/bearer')
 
 Test('Auth module', moduleTest => {
   moduleTest.test('register should', registerTest => {
@@ -17,6 +18,22 @@ Test('Auth module', moduleTest => {
 
       const next = () => {
         test.ok(schemeSpy.calledWith('basic', BasicAuth.implementation))
+        test.end()
+      }
+
+      AuthModule.register(server, null, next)
+    })
+
+    registerTest.test('register bearer auth scheme', test => {
+      const schemeSpy = Sinon.spy()
+      const server = {
+        auth: {
+          scheme: schemeSpy
+        }
+      }
+
+      const next = () => {
+        test.ok(schemeSpy.calledWith('bearer', BearerAuth.implementation))
         test.end()
       }
 
