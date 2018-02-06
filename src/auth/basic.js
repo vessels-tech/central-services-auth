@@ -43,7 +43,7 @@ exports.authenticate = ({validate}) => {
         return reply(new UnauthorizedError('Bad username or password'))
       }
 
-      return reply.continue({ credentials: credentials })
+      return reply.continue({credentials: credentials})
     })
   }
 }

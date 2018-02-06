@@ -33,7 +33,7 @@ const authenticate = ({validate}) => {
         return reply(new UnauthorizedError('Invalid token', 'Bearer'))
       }
 
-      return reply.continue({ credentials: credentials })
+      return reply.continue({credentials: credentials})
     })
   }
 }
