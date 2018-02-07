@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/mojaloop/central-services-auth#readme",
   "dependencies": {
-    "@mojaloop/central-services-shared": "0.3.0"
+    "@mojaloop/central-services-shared": "0.4.0"
   },
   "devDependencies": {
     "faucet": "0.0.1",
