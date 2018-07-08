@@ -4,7 +4,7 @@ const UnauthorizedError = require('./unauthorized')
 const InvalidAuthorizationError = require('./invalid-authorization')
 
 const authenticate = ({validate}) => {
-  return (request, reply) => {
+  return function (request, reply) {
     const headers = request.headers
     const authorization = headers.authorization
 
@@ -33,7 +33,7 @@ const authenticate = ({validate}) => {
         return reply(new UnauthorizedError('Invalid token', 'Bearer'))
       }
 
-      return reply.continue({ credentials: credentials })
+      return reply.continue({credentials: credentials})
     })
   }
 }

@@ -16,12 +16,9 @@ Test('Auth module', moduleTest => {
         }
       }
 
-      const next = () => {
-        test.ok(schemeSpy.calledWith('basic', BasicAuth.implementation))
-        test.end()
-      }
-
-      AuthModule.register(server, null, next)
+      AuthModule.plugin.register(server, null)
+      test.ok(schemeSpy.calledWith('basic', BasicAuth.implementation))
+      test.end()
     })
 
     registerTest.test('register bearer auth scheme', test => {
@@ -32,19 +29,16 @@ Test('Auth module', moduleTest => {
         }
       }
 
-      const next = () => {
-        test.ok(schemeSpy.calledWith('bearer', BearerAuth.implementation))
-        test.end()
-      }
-
-      AuthModule.register(server, null, next)
+      AuthModule.plugin.register(server, null)
+      test.ok(schemeSpy.calledWith('bearer', BearerAuth.implementation))
+      test.end()
     })
 
     registerTest.end()
   })
 
   moduleTest.test('name should be central-services-auth', test => {
-    test.equal(AuthModule.register.attributes.name, 'central-services-auth')
+    test.equal(AuthModule.plugin.name, 'central-services-auth')
     test.end()
   })
 
