@@ -32,7 +32,7 @@ Test('Bearer scheme', schemeTest => {
 
   schemeTest.test('authenticate should', authenticateTest => {
     authenticateTest.test('reply with Unauthorized if request authorization header missing', test => {
-      const request = { headers: {} }
+      const request = {headers: {}}
       const reply = (e) => {
         test.ok(e instanceof UnauthorizedError)
         test.equal(e.message, 'Missing authorization')
@@ -77,9 +77,9 @@ Test('Bearer scheme', schemeTest => {
 
     authenticateTest.test('call options validate with token and continue reply with returned credentials', test => {
       const validateStub = Sinon.stub()
-      const credentials = { user: 'Joe Schmoe' }
+      const credentials = {user: 'Joe Schmoe'}
       validateStub.yields(null, true, credentials)
-      const options = { validate: validateStub }
+      const options = {validate: validateStub}
       const token = 'token'
       const request = validRequest(token)
 
@@ -105,7 +105,7 @@ Test('Bearer scheme', schemeTest => {
         test.end()
       }
 
-      authenticate(request, reply, { validate: validateStub })
+      authenticate(request, reply, {validate: validateStub})
     })
 
     authenticateTest.test('reply with Unauthorized if validate returns invalid', test => {
@@ -118,7 +118,7 @@ Test('Bearer scheme', schemeTest => {
         test.end()
       }
 
-      authenticate(validRequest(), reply, { validate: validateStub })
+      authenticate(validRequest(), reply, {validate: validateStub})
     })
 
     authenticateTest.end()
