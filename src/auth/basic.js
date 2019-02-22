@@ -6,7 +6,7 @@ const Encoding = require('@mojaloop/central-services-shared').Encoding
 
 exports.name = 'basic'
 
-exports.authenticate = ({validate}) => {
+exports.authenticate = ({ validate }) => {
   return function (request, reply) {
     const headers = request.headers
     const authorization = headers.authorization
@@ -43,7 +43,7 @@ exports.authenticate = ({validate}) => {
         return reply(new UnauthorizedError('Bad username or password'))
       }
 
-      return reply.continue({credentials: credentials})
+      return reply.continue({ credentials: credentials })
     })
   }
 }

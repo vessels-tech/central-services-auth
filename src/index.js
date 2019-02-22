@@ -5,7 +5,7 @@ const BearerScheme = require('./auth/bearer')
 
 exports.plugin = {
   name: 'central-services-auth',
-  register: function (server, options) {
+  register: function (server) {
     server.auth.scheme(BasicScheme.name, BasicScheme.implementation)
     server.auth.scheme(BearerScheme.name, BearerScheme.implementation)
   }

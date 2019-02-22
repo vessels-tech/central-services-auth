@@ -33,7 +33,7 @@ Test('Basic scheme', schemeTest => {
 
   schemeTest.test('authenticate should', authenticateTest => {
     authenticateTest.test('reply with Unauthorized if request authorization header missing', test => {
-      const request = {headers: {}}
+      const request = { headers: {} }
       const reply = (e) => {
         test.ok(e instanceof UnauthorizedError)
         test.equal(e.message, 'Missing authorization')
@@ -93,9 +93,9 @@ Test('Basic scheme', schemeTest => {
 
     authenticateTest.test('call options validate with username and password and continue reply with returned credentials', test => {
       let validateStub = Sinon.stub()
-      let credentials = {user: 'Joe Schmoe'}
+      let credentials = { user: 'Joe Schmoe' }
       validateStub.yields(null, true, credentials)
-      let options = {validate: validateStub}
+      let options = { validate: validateStub }
       let username = 'username'
       let password = 'password'
       let request = validRequest(username, password)
@@ -122,7 +122,7 @@ Test('Basic scheme', schemeTest => {
         test.end()
       }
 
-      authenticate(request, reply, {validate: validateStub})
+      authenticate(request, reply, { validate: validateStub })
     })
 
     authenticateTest.test('reply with Unauthorized if validate returns invalid', test => {
@@ -135,7 +135,7 @@ Test('Basic scheme', schemeTest => {
         test.end()
       }
 
-      authenticate(validRequest(), reply, {validate: validateStub})
+      authenticate(validRequest(), reply, { validate: validateStub })
     })
 
     authenticateTest.end()

@@ -1,6 +1,6 @@
 {
   "name": "@mojaloop/central-services-auth",
-  "version": "2.0.0-release",
+  "version": "5.2.0",
   "description": "Authentication module for central services",
   "main": "src/index.js",
   "scripts": {
@@ -22,22 +22,25 @@
     "services"
   ],
   "author": "Dwolla",
+  "contributors": [
+    "Georgi Georgiev <georgi.georgiev@modusbox.com>"
+  ],
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/mojaloop/central-services-auth/issues"
   },
   "homepage": "https://github.com/mojaloop/central-services-auth#readme",
   "dependencies": {
-    "@mojaloop/central-services-shared": "0.4.0"
+    "@mojaloop/central-services-shared": "5.2.0"
   },
   "devDependencies": {
     "faucet": "0.0.1",
-    "istanbul": "0.4.5",
+    "istanbul": "1.1.0-alpha.1",
     "pre-commit": "1.2.2",
-    "sinon": "4.2.2",
-    "standard": "10.0.3",
-    "tap-xunit": "2.2.0",
-    "tape": "4.8.0"
+    "sinon": "7.2.4",
+    "standard": "12.0.1",
+    "tap-xunit": "2.3.0",
+    "tape": "4.10.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
