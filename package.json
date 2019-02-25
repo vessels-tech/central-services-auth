@@ -1,6 +1,6 @@
 {
   "name": "@mojaloop/central-services-auth",
-  "version": "5.2.0",
+  "version": "5.2.1",
   "description": "Authentication module for central services",
   "main": "src/index.js",
   "scripts": {
