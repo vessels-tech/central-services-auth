@@ -1,4 +1,5 @@
 # central-services-auth
+
 Share authentication and authorization code for central services
 
 Registering this module with hapi with install an authentication scheme with the name `'basic'`
@@ -47,3 +48,19 @@ server.auth.strategy('simple', 'basic', { validate: validate });
 server.route({ method: 'GET', path: '/', config: { auth: 'simple' } });
 
 ```
+
+## Auditing Dependencies
+
+We use `npm-audit-resolver` along with `npm audit` to check dependencies for vulnerabilities, and r
+
+To start a new resolution process, run:
+```bash
+npm run audit:resolve
+```
+
+You can then check to see if the CI will pass based on the current dependencies with:
+```bash
+npm run audit:check
+```
+
+And commit the changed `audit-resolv.json` to ensure that CircleCI will build correctly.
