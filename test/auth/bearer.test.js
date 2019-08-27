@@ -95,12 +95,12 @@ Test('Bearer scheme', schemeTest => {
     })
 
     authenticateTest.test('reply with error if validate returns error', test => {
-      let error = new Error()
-      let validateStub = Sinon.stub()
+      const error = new Error()
+      const validateStub = Sinon.stub()
       validateStub.yields(error)
-      let request = validRequest()
+      const request = validRequest()
 
-      let reply = (e) => {
+      const reply = (e) => {
         test.equal(e, error)
         test.end()
       }
@@ -109,10 +109,10 @@ Test('Bearer scheme', schemeTest => {
     })
 
     authenticateTest.test('reply with Unauthorized if validate returns invalid', test => {
-      let validateStub = Sinon.stub()
+      const validateStub = Sinon.stub()
       validateStub.yields(null, false)
 
-      let reply = (e) => {
+      const reply = (e) => {
         test.ok(e instanceof UnauthorizedError)
         test.equal(e.message, 'Invalid token')
         test.end()

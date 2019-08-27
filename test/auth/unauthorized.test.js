@@ -8,7 +8,7 @@ const ErrorCategory = require('@mojaloop/central-services-shared').ErrorCategory
 Test('UnauthorizedError test', errorTest => {
   errorTest.test('constructor should', ctorTest => {
     ctorTest.test('set defaults', test => {
-      let error = new UnauthorizedError()
+      const error = new UnauthorizedError()
       test.equal(error.category, ErrorCategory.UNAUTHORIZED)
       test.equal(error.message, 'Unauthorized')
       test.equal(error.scheme, 'Basic')
@@ -21,7 +21,7 @@ Test('UnauthorizedError test', errorTest => {
     ctorTest.test('set message and scheme', test => {
       const message = 'some message'
       const scheme = 'Bearer'
-      let error = new UnauthorizedError(message, scheme)
+      const error = new UnauthorizedError(message, scheme)
       test.equal(error.scheme, scheme)
       test.equal(error.message, message)
       test.equal(error.payload.message, message)

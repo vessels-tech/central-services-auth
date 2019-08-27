@@ -7,11 +7,11 @@ const UnauthorizedError = require('../../src/auth/unauthorized')
 const InvalidAuthorizationError = require('../../src/auth/invalid-authorization')
 const Encoding = require('@mojaloop/central-services-shared').Encoding
 
-let authenticate = (request, reply, options = {}) => {
+const authenticate = (request, reply, options = {}) => {
   return Basic.authenticate(options)(request, reply)
 }
 
-let validRequest = (username = 'username', password = 'password') => {
+const validRequest = (username = 'username', password = 'password') => {
   return {
     headers: {
       authorization: 'Basic ' + Encoding.toBase64(username + ':' + password)
@@ -22,7 +22,7 @@ let validRequest = (username = 'username', password = 'password') => {
 Test('Basic scheme', schemeTest => {
   schemeTest.test('implementation should', implementationTest => {
     implementationTest.test('return scheme with authenticate method', test => {
-      let result = Basic.implementation()
+      const result = Basic.implementation()
 
       test.ok(result.authenticate)
       test.equal(typeof result.authenticate, 'function')
@@ -61,12 +61,12 @@ Test('Basic scheme', schemeTest => {
     })
 
     authenticateTest.test('reply with InvalidAuthorization if credentials does not contain colon', test => {
-      let request = {
+      const request = {
         headers: {
           authorization: 'Basic somebadvalue'
         }
       }
-      let reply = (e) => {
+      const reply = (e) => {
         test.ok(e instanceof InvalidAuthorizationError)
         test.equal(e.message, 'Bad HTTP authorization header')
         test.end()
@@ -76,13 +76,13 @@ Test('Basic scheme', schemeTest => {
     })
 
     authenticateTest.test('reply with Unauthorized if credentials does not contain username', test => {
-      let request = {
+      const request = {
         headers: {
           authorization: 'Basic ' + Encoding.toBase64(':nousername')
         }
       }
 
-      let reply = (e) => {
+      const reply = (e) => {
         test.ok(e instanceof UnauthorizedError)
         test.equal(e.message, 'Missing username')
         test.end()
@@ -92,15 +92,15 @@ Test('Basic scheme', schemeTest => {
     })
 
     authenticateTest.test('call options validate with username and password and continue reply with returned credentials', test => {
-      let validateStub = Sinon.stub()
-      let credentials = { user: 'Joe Schmoe' }
+      const validateStub = Sinon.stub()
+      const credentials = { user: 'Joe Schmoe' }
       validateStub.yields(null, true, credentials)
-      let options = { validate: validateStub }
-      let username = 'username'
-      let password = 'password'
-      let request = validRequest(username, password)
+      const options = { validate: validateStub }
+      const username = 'username'
+      const password = 'password'
+      const request = validRequest(username, password)
 
-      let reply = {
+      const reply = {
         continue: (creds) => {
           test.ok(validateStub.calledWith(request, username, password))
           test.equal(creds.credentials, credentials)
@@ -112,12 +112,12 @@ Test('Basic scheme', schemeTest => {
     })
 
     authenticateTest.test('reply with error if validate returns error', test => {
-      let error = new Error()
-      let validateStub = Sinon.stub()
+      const error = new Error()
+      const validateStub = Sinon.stub()
       validateStub.yields(error)
-      let request = validRequest()
+      const request = validRequest()
 
-      let reply = (e) => {
+      const reply = (e) => {
         test.equal(e, error)
         test.end()
       }
@@ -126,10 +126,10 @@ Test('Basic scheme', schemeTest => {
     })
 
     authenticateTest.test('reply with Unauthorized if validate returns invalid', test => {
-      let validateStub = Sinon.stub()
+      const validateStub = Sinon.stub()
       validateStub.yields(null, false)
 
-      let reply = (e) => {
+      const reply = (e) => {
         test.ok(e instanceof UnauthorizedError)
         test.equal(e.message, 'Bad username or password')
         test.end()
